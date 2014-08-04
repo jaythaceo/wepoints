@@ -30,7 +30,7 @@ class Crawl:
 		opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookie))
 		
 	def getURL(self):
-		if globalData['debug']: print 'Crawl | init called'
+		if globalData['debug']: print 'Crawl | getURL called'
 		# check for start url
 		if globalData['startURL']:
 			url = [(0, globalData['startURL'])]
@@ -40,4 +40,28 @@ class Crawl:
 		return url
 	
 	def requestURL(self):
+		if globalData['debug']: print 'Crawl | requestURL called'
+		url = data['full_url']
+		request = urllib2.REquest(url)
+		self.cookie.add_cookie_header(request)
+		visitedtime = datetime.datetime.utcnow()
+		try:
+			start = time.clock()
+			response = urllib2.urlopen(request)
+			response = response.read()
+			end = time.clock()
+			loadtime = end - start 
+		except (urllib2.HTTPError, urllib2.URLError), e:
+			response = None
+			data.update({'error': e})
+			loadtime = 0
+		data.update({'source': response, 'loadtime': loadtime, 'request_url': url, 'visitedtime': visitedtime})
+		return data
+
+class DBops(object):
+
+
+
+
+	
 		
