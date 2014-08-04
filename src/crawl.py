@@ -29,10 +29,15 @@ class Crawl:
 		self.cookie = cookielib.CookieJar()
 		opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookie))
 		
-
-
 	def getURL(self):
+		if globalData['debug']: print 'Crawl | init called'
+		# check for start url
+		if globalData['startURL']:
+			url = [(0, globalData['startURL'])]
+			globalData['startURL'] = None
+		else:
+			url = self.db.getURLFromQueue(globalData['threadLimit'])
+		return url
 	
-
 	def requestURL(self):
 		
