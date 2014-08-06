@@ -59,6 +59,14 @@ class Crawl:
 		return data
 
 class DBops(object):
+	def __init__(self):
+
+		
+	def create(self):
+	
+
+	def getURLFromQueue(self, limit):
+
 
 
 
